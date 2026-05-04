@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails Formation - AFI Digital Academy</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #FF5722;      
+            --primary-dark: #E64A19; 
+            --accent: #FFB300;       
+            --black: #111111;        
+            --white: #FFFFFF;        
+            --bg-light: #F8F8F8;     
+            --text-regular: #333333; 
+            
+            --font-title: 'Montserrat', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+            
+            --transition: all 0.3s ease;
+            --shadow: 0 10px 30px rgba(0,0,0,0.05);
+            --border-radius-pill: 50px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-light);
+            color: var(--text-regular);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, .brand {
+            font-family: var(--font-title);
+            color: var(--black);
+            text-transform: uppercase;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* HEADER */
+        header {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            background-color: var(--primary);
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.15);
+            padding: 15px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand img {
+            max-height: 45px;
+            display: block;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            border-radius: var(--border-radius-pill);
+            font-weight: 700;
+            font-family: var(--font-title);
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            gap: 10px;
+        }
+
+        .btn-white {
+            background-color: var(--white);
+            color: var(--primary);
+        }
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+            box-shadow: 0 8px 25px rgba(255, 87, 34, 0.3);
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 87, 34, 0.4);
+        }
+
+        /* MAIN CONTENT */
+        main {
+            padding: 150px 0 100px;
+        }
+
+        .details-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.03);
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-title);
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--primary-dark);
+            transform: translateX(-5px);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 30px;
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #efefef;
+        }
+
+        .icon-huge {
+            width: 100px;
+            height: 100px;
+            border-radius: 20px;
+            background-color: rgba(255, 87, 34, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .title-area h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--black);
+            line-height: 1.2;
+        }
+
+        .meta-tags {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .meta-tags .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background-color: var(--bg-light);
+            border-radius: 50px;
+            font-family: var(--font-title);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--black);
+            border: 1px solid #e0e0e0;
+        }
+
+        .content-area h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .content-area p {
+            font-size: 1.1rem;
+            color: var(--text-regular);
+            margin-bottom: 20px;
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+
+        .action-area {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 1px solid #efefef;
+            text-align: center;
+        }
+
+        .not-found {
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .not-found h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .title-area h1 {
+                font-size: 2rem;
+            }
+            .meta-tags {
+                justify-content: center;
+            }
+            .details-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="brand">
+                    <img src="logo.png" alt="AFI Digital Academy Logo">
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container" id="details-container">
+            <!-- Injected by JS -->
+        </div>
+    </main>
+
+    <script src="js/formations.js"></script>
+    <script>
+        lucide.createIcons();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const formationId = urlParams.get('id');
+        const container = document.getElementById('details-container');
+
+        const formation = FormationsManager.getById(formationId);
+
+        if (formation) {
+            container.innerHTML = `
+                <div class="details-card">
+                    <a href="index.html#bootcamps" class="back-link">
+                        <i data-lucide="arrow-left" style="width:18px;"></i>
+                        Retour aux bootcamps
+                    </a>
+
+                    <div class="header-content">
+                        <div class="icon-huge">
+                            <i data-lucide="${formation.icon}" style="width:50px; height:50px;"></i>
+                        </div>
+                        <div class="title-area">
+                            <h1>${formation.title}</h1>
+                            <div class="meta-tags">
+                                <span class="badge">
+                                    <i data-lucide="bar-chart" style="width:16px;"></i>
+                                    ${formation.level}
+                                </span>
+                                <span class="badge" style="background-color: rgba(255, 179, 0, 0.15); border: none;">
+                                    <i data-lucide="clock" style="width:16px; color: var(--primary);"></i>
+                                    ${formation.duration}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-area">
+                        <h3>Aperçu du Programme</h3>
+                        <p style="font-weight: 500; font-size: 1.15rem; color: var(--black); margin-bottom: 10px;">${formation.shortDescription}</p>
+                        <p>${formation.longDescription}</p>
+                    </div>
+
+                    <div class="action-area">
+                        <p style="margin-bottom: 20px; font-weight: 700;">Prêt(e) à donner un coup de boost à votre carrière ?</p>
+                        <button class="btn btn-primary" onclick="enrollWhatsApp('${formation.title.replace(/'/g, "\\'")}')">
+                            <i data-lucide="message-circle"></i> INFO & INSCRIPTION SUR WHATSAPP
+                        </button>
+                    </div>
+                </div>
+            `;
+            lucide.createIcons();
+        } else {
+            container.innerHTML = `
+                <div class="details-card not-found">
+                    <i data-lucide="alert-circle" style="width:60px; height:60px; color:var(--primary); margin-bottom:20px;"></i>
+                    <h2>Formation introuvable</h2>
+                    <p>La formation que vous recherchez n'existe pas ou a été supprimée.</p>
+                    <a href="index.html" class="btn btn-primary" style="margin-top:30px;">Retour à l'accueil</a>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        // WhatsApp direct logic for the details page
+        function enrollWhatsApp(courseName) {
+            const message = `🎓 *Bonjour, je souhaite avoir plus d'informations sur la formation :*\n📚 ${courseName}\n\n_Pouvez-vous m'indiquer la procédure d'inscription ?_`;
+            const encodedMessage = encodeURIComponent(message);
+            const adminPhone = "221775023525";
+            const whatsappUrl = `https://wa.me/${adminPhone}?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>

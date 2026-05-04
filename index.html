@@ -814,9 +814,14 @@
                 <a href="#" class="brand">
                     <img src="logo.png" alt="AFI Digital Academy Logo">
                 </a>
-                <a href="#bootcamps" class="btn btn-white" style="padding: 10px 24px; min-height: 44px; font-size: 0.85rem;">
-                    Nos Formations
-                </a>
+                <div style="display: flex; gap: 10px;">
+                    <a href="#bootcamps" class="btn btn-white" style="padding: 10px 24px; min-height: 44px; font-size: 0.85rem;">
+                        Nos Formations
+                    </a>
+                    <button class="btn btn-primary" onclick="openEnrollModal('')" style="padding: 10px 24px; min-height: 44px; font-size: 0.85rem;">
+                        S'inscrire
+                    </button>
+                </div>
             </nav>
         </div>
     </header>
@@ -854,62 +859,8 @@
                 </div>
             </div>
 
-            <div class="bootcamp-grid">
-                <!-- Card 1 -->
-                <div class="card fade-in">
-                    <div class="card-icon-wrapper">
-                        <i data-lucide="target" style="width:28px; height:28px;"></i>
-                    </div>
-                    <h3>MARKETING DIGITAL</h3>
-                    <p>Maîtrisez la publicité Meta, Google Ads, et le community management.</p>
-                    <div class="card-meta">
-                        <div class="badge badge-accent" style="margin-bottom:0;">Débutant</div>
-                        <div class="meta-item"><i data-lucide="clock" style="width:16px; color:var(--primary);"></i> 8 Semaines</div>
-                    </div>
-                    <button class="btn btn-primary w-100 open-modal" style="width:100%" data-course="Marketing Digital">Je m'inscris</button>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="card fade-in" style="transition-delay: 0.1s;">
-                    <div class="card-icon-wrapper">
-                        <i data-lucide="pen-tool" style="width:28px; height:28px;"></i>
-                    </div>
-                    <h3>DESIGN GRAPHIQUE</h3>
-                    <p>Créez des visuels pro avec Canva, Photoshop et Illustrator.</p>
-                    <div class="card-meta">
-                        <div class="badge badge-accent" style="margin-bottom:0;">Débutant</div>
-                        <div class="meta-item"><i data-lucide="clock" style="width:16px; color:var(--primary);"></i> 6 Semaines</div>
-                    </div>
-                    <button class="btn btn-primary w-100 open-modal" style="width:100%" data-course="Design Graphique">Je m'inscris</button>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="card fade-in" style="transition-delay: 0.2s;">
-                    <div class="card-icon-wrapper">
-                        <i data-lucide="code" style="width:28px; height:28px;"></i>
-                    </div>
-                    <h3>DÉVELOPPEMENT WEB</h3>
-                    <p>Construisez des sites et applications web modernes de A à Z.</p>
-                    <div class="card-meta">
-                        <div class="badge" style="margin-bottom:0;">Intermédiaire</div>
-                        <div class="meta-item"><i data-lucide="clock" style="width:16px; color:var(--primary);"></i> 12 Semaines</div>
-                    </div>
-                    <button class="btn btn-primary w-100 open-modal" style="width:100%" data-course="Développement Web">Je m'inscris</button>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="card fade-in" style="transition-delay: 0.3s;">
-                    <div class="card-icon-wrapper">
-                        <i data-lucide="cpu" style="width:28px; height:28px;"></i>
-                    </div>
-                    <h3>INTELLIGENCE ARTIFICIELLE</h3>
-                    <p>Utilisez l'IA pour automatiser, créer et vous démarquer.</p>
-                    <div class="card-meta">
-                        <div class="badge badge-accent" style="margin-bottom:0;">Débutant</div>
-                        <div class="meta-item"><i data-lucide="clock" style="width:16px; color:var(--primary);"></i> 6 Semaines</div>
-                    </div>
-                    <button class="btn btn-primary w-100 open-modal" style="width:100%" data-course="Intelligence Artificielle">Je m'inscris</button>
-                </div>
+            <div class="bootcamp-grid" id="bootcampsGrid">
+                <!-- Data will be injected here via JS -->
             </div>
         </div>
     </section>
@@ -1089,10 +1040,15 @@
                 <div class="form-group">
                     <label for="courseSelect">Formation choisie *</label>
                     <select id="courseSelect" class="form-control" required>
-                        <option value="Marketing Digital">Marketing Digital</option>
-                        <option value="Design Graphique">Design Graphique</option>
-                        <option value="Développement Web">Développement Web</option>
-                        <option value="Intelligence Artificielle">Intelligence Artificielle</option>
+                        <!-- Options generated by JS -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="modalitySelect">Modalité (En ligne ou Présentiel) *</label>
+                    <select id="modalitySelect" class="form-control" required>
+                        <option value="En Ligne">En Ligne</option>
+                        <option value="Présentiel">Présentiel</option>
                     </select>
                 </div>
                 
@@ -1107,6 +1063,7 @@
     </div>
 
     <!-- Scripts -->
+    <script src="js/formations.js"></script>
     <script>
         // Init Lucide Icons
         lucide.createIcons();
@@ -1138,15 +1095,58 @@
         const courseSelect = document.getElementById('courseSelect');
         const enrollForm = document.getElementById('enrollForm');
         
-        // Open Modal Buttons
-        document.querySelectorAll('.open-modal').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const courseName = e.target.getAttribute('data-course');
-                modalCourseName.textContent = courseName.toUpperCase();
-                courseSelect.value = courseName;
-                modal.classList.add('active');
+        // Render Formations
+        const bootcampsGrid = document.getElementById('bootcampsGrid');
+        const formations = FormationsManager.getAll();
+
+        if (formations.length > 0) {
+            bootcampsGrid.innerHTML = '';
+            courseSelect.innerHTML = '';
+            
+            formations.forEach((f, index) => {
+                const delay = index * 0.1;
+                
+                // Add to Select
+                const option = document.createElement('option');
+                option.value = f.title;
+                option.textContent = f.title;
+                courseSelect.appendChild(option);
+                
+                // Add to Grid
+                const card = document.createElement('div');
+                card.className = 'card fade-in';
+                card.style.transitionDelay = `${delay}s`;
+                card.innerHTML = `
+                    <div class="card-icon-wrapper">
+                        <i data-lucide="${f.icon}" style="width:28px; height:28px;"></i>
+                    </div>
+                    <h3>${f.title.toUpperCase()}</h3>
+                    <p>${f.shortDescription}</p>
+                    <div class="card-meta">
+                        <div class="badge badge-accent" style="margin-bottom:0;">${f.level}</div>
+                        <div class="meta-item"><i data-lucide="clock" style="width:16px; color:var(--primary);"></i> ${f.duration}</div>
+                    </div>
+                    <div style="width:100%;">
+                        <a href="formation-details.html?id=${f.id}" class="btn btn-primary" style="width:100%; display:inline-block; text-align:center;">Voir les détails</a>
+                    </div>
+                `;
+                bootcampsGrid.appendChild(card);
+                observer.observe(card);
             });
-        });
+            // Re-init icons
+            lucide.createIcons();
+        }
+
+        // Open Modal window function
+        window.openEnrollModal = (courseName) => {
+            modalCourseName.textContent = courseName ? courseName.toUpperCase() : "AU BOOTCAMP";
+            if (courseName && courseSelect.querySelector(`option[value="${courseName}"]`)) {
+                courseSelect.value = courseName;
+            } else if (courseSelect.options.length > 0) {
+                courseSelect.selectedIndex = 0;
+            }
+            modal.classList.add('active');
+        };
 
         // Close Modal
         const closeModal = () => {
@@ -1172,6 +1172,7 @@
             const fullName = document.getElementById('fullName').value.trim();
             const whatsappNumber = document.getElementById('whatsappNumber').value.trim();
             const selectedCourse = courseSelect.value;
+            const selectedModality = document.getElementById('modalitySelect').value;
             
             if (!fullName || !whatsappNumber) {
                 alert("Veuillez remplir votre nom et numéro WhatsApp.");
@@ -1179,7 +1180,7 @@
             }
 
             // Construction du message WhatsApp
-            const message = `🎓 *Nouvelle inscription AFI Digital Academy*\n\n👤 *Nom :* ${fullName}\n📱 *WhatsApp :* ${whatsappNumber}\n📚 *Formation souhaitée :* ${selectedCourse}\n\n_Merci de m'indiquer la suite de la procédure d'inscription._`;
+            const message = `🎓 *Nouvelle inscription AFI Digital Academy*\n\n👤 *Nom :* ${fullName}\n📱 *WhatsApp :* ${whatsappNumber}\n📚 *Formation souhaitée :* ${selectedCourse}\n📍 *Modalité :* ${selectedModality}\n\n_Merci de m'indiquer la suite de la procédure d'inscription._`;
 
             const encodedMessage = encodeURIComponent(message);
             const adminPhone = "221775023525";
