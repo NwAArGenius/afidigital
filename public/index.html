@@ -20,7 +20,7 @@
                     <img src="assets/logo.png" alt="AFI Digital Academy Logo">
                 </a>
                 <div style="display: flex; gap: 10px;">
-                    <a href="#bootcamps" class="btn btn-white" style="padding: 10px 24px; min-height: 44px; font-size: 0.85rem;">
+                    <a href="#formations" class="btn btn-white" style="padding: 10px 24px; min-height: 44px; font-size: 0.85rem;">
                         Nos Formations
                     </a>
                     <button class="btn btn-primary" onclick="openEnrollModal('')" style="padding: 10px 24px; min-height: 44px; font-size: 0.85rem;">
@@ -39,13 +39,13 @@
                 <h1>APPRENEZ LES COMPETENCES DU FUTUR</h1>
 
                 <div class="separator">
-                    <span>BUILD HERE YOUR SKILLS</span>
+                    <span>CONSTRUISEZ VOS COMPÉTENCES</span>
                 </div>
 
-                <p>Rejoignez nos bootcamps intensifs, formez-vous auprès d'experts du terrain et boostez votre carrière digitale à Dakar en quelques semaines.</p>
+                <p>Rejoignez nos formations intensives, formez-vous auprès d'experts du terrain et boostez votre carrière digitale à Dakar en quelques semaines.</p>
 
-                <a href="#bootcamps" class="btn btn-primary" style="font-size: 1rem; padding: 18px 40px;">
-                    Voir les Bootcamps
+                <a href="#formations" class="btn btn-primary" style="font-size: 1rem; padding: 18px 40px;">
+                    Voir les Formations
                 </a>
             </div>
             <div class="hero-image">
@@ -54,13 +54,13 @@
         </div>
     </section>
 
-    <!-- Bootcamps Section -->
-    <section id="bootcamps" class="bootcamps">
+    <!-- Formations Section -->
+    <section id="formations" class="bootcamps">
         <div class="container">
             <div class="section-header fade-in">
-                <h2>NOS BOOTCAMPS INTENSIFS</h2>
+                <h2>NOS FORMATIONS INTENSIVES</h2>
                 <div class="separator">
-                    <span>EXPLORE COURSES</span>
+                    <span>DÉCOUVRIR NOS FORMATIONS</span>
                 </div>
             </div>
 
@@ -76,7 +76,7 @@
             <div class="section-header fade-in">
                 <h2>POURQUOI NOUS CHOISIR ?</h2>
                 <div class="separator">
-                    <span>AFI ADVANTAGES</span>
+                    <span>NOS AVANTAGES</span>
                 </div>
             </div>
 
@@ -118,7 +118,7 @@
                 </div>
                 <div class="stat-item">
                     <h3>4</h3>
-                    <p>Bootcamps</p>
+                    <p>Formations</p>
                 </div>
             </div>
         </div>
@@ -130,19 +130,19 @@
             <div class="section-header fade-in">
                 <h2>TÉMOIGNAGES</h2>
                 <div class="separator">
-                    <span>STUDENT STORIES</span>
+                    <span>PAROLES D'ÉTUDIANTS</span>
                 </div>
             </div>
 
             <div class="testi-grid">
                 <div class="testi-card fade-in">
                     <i data-lucide="quote" class="quote-icon"></i>
-                    <p class="testi-text">"Grâce au bootcamp Marketing Digital, j'ai pu lancer mon agence à Dakar en seulement 2 mois. Les formateurs sont exceptionnels et très à l'écoute."</p>
+                    <p class="testi-text">"Grâce à la formation Marketing Digital, j'ai pu lancer mon agence à Dakar en seulement 2 mois. Les formateurs sont exceptionnels et très à l'écoute."</p>
                     <div class="testi-user">
                         <div class="user-avatar" style="background: var(--primary);">AK</div>
                         <div>
                             <h4>Aïssatou Kane</h4>
-                            <span>Alumni Marketing</span>
+                            <span>Diplômée Marketing</span>
                         </div>
                     </div>
                 </div>
@@ -154,7 +154,7 @@
                         <div class="user-avatar" style="background: var(--black);">MD</div>
                         <div>
                             <h4>Moustapha Diop</h4>
-                            <span>Alumni Dev Web</span>
+                            <span>Diplômé Dév. Web</span>
                         </div>
                     </div>
                 </div>
@@ -166,7 +166,7 @@
                         <div class="user-avatar" style="background: var(--accent); color: var(--black);">FS</div>
                         <div>
                             <h4>Fatou Ndiaye Sy</h4>
-                            <span>Alumni I.A.</span>
+                            <span>Diplômée I.A.</span>
                         </div>
                     </div>
                 </div>
@@ -242,7 +242,7 @@
                 <div class="form-group">
                     <label for="courseSelect">Formation choisie *</label>
                     <select id="courseSelect" class="form-control" required>
-                        <!-- Options generated by JS -->
+                        <option value="" disabled selected>Choisissez votre formation</option>
                     </select>
                 </div>
 
@@ -310,7 +310,7 @@
         });
 
         window.openEnrollModal = (courseName) => {
-            modalCourseName.textContent = courseName ? courseName.toUpperCase() : "AU BOOTCAMP";
+            modalCourseName.textContent = courseName ? courseName.toUpperCase() : "À LA FORMATION";
             if (courseName && courseSelect.querySelector(`option[value="${courseName}"]`)) {
                 courseSelect.value = courseName;
             } else if (courseSelect.options.length > 0) {
@@ -388,16 +388,19 @@
                     formation: selectedCourse,
                     modality: selectedModality
                 });
-
-                enrollForm.reset();
-                enrollForm.style.display = 'none';
-                enrollSuccessView.style.display = '';
-                lucide.createIcons();
             } catch (err) {
-                alert("Une erreur est survenue. Veuillez réessayer.");
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'VALIDER MON INSCRIPTION';
+                console.warn('Erreur DB:', err.message);
             }
+
+            const message = `🎓 *Nouvelle inscription — AFI Digital Academy*\n\n👤 *Nom :* ${fullName}\n📱 *WhatsApp :* ${whatsappNumber}\n📚 *Formation :* ${selectedCourse}\n📍 *Modalité :* ${selectedModality}\n\n_Merci de m'indiquer la suite de la procédure d'inscription._`;
+            window.open(`https://wa.me/221775023525?text=${encodeURIComponent(message)}`, '_blank');
+
+            enrollForm.reset();
+            enrollForm.style.display = 'none';
+            enrollSuccessView.style.display = '';
+            lucide.createIcons();
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'VALIDER MON INSCRIPTION';
         });
     </script>
 </body>

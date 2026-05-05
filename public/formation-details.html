@@ -131,16 +131,19 @@
                     formation: currentFormationTitle,
                     modality: selectedModality
                 });
-
-                enrollForm.reset();
-                enrollForm.style.display = 'none';
-                enrollSuccessView.style.display = '';
-                lucide.createIcons();
             } catch (err) {
-                alert("Une erreur est survenue. Veuillez réessayer.");
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'VALIDER MON INSCRIPTION';
+                console.warn('Erreur DB:', err.message);
             }
+
+            const message = `🎓 *Nouvelle inscription — AFI Digital Academy*\n\n👤 *Nom :* ${fullName}\n📱 *WhatsApp :* ${whatsappNumber}\n📚 *Formation :* ${currentFormationTitle}\n📍 *Modalité :* ${selectedModality}\n\n_Merci de m'indiquer la suite de la procédure d'inscription._`;
+            window.open(`https://wa.me/221775023525?text=${encodeURIComponent(message)}`, '_blank');
+
+            enrollForm.reset();
+            enrollForm.style.display = 'none';
+            enrollSuccessView.style.display = '';
+            lucide.createIcons();
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'VALIDER MON INSCRIPTION';
         });
 
         (async () => {
@@ -162,9 +165,9 @@
                 if (formation) {
                     container.innerHTML = `
                         <div class="details-card">
-                            <a href="index.html#bootcamps" class="back-link">
+                            <a href="index.html#formations" class="back-link">
                                 <i data-lucide="arrow-left" style="width:18px;"></i>
-                                Retour aux bootcamps
+                                Retour aux formations
                             </a>
                             <div class="header-content">
                                 <div class="icon-huge">
