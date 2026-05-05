@@ -421,3 +421,97 @@ textarea.form-control {
     font-weight: 700;
     margin-top: 4px;
 }
+
+@media (max-width: 900px) {
+    body {
+        flex-direction: column;
+    }
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        align-items: center;
+        padding: 12px 20px;
+        overflow-x: auto;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+    .brand img {
+        max-width: 90px;
+        margin-bottom: 0;
+        flex-shrink: 0;
+    }
+    .nav-menu {
+        display: flex;
+        flex-grow: 0;
+        gap: 4px;
+        white-space: nowrap;
+    }
+    .nav-item {
+        margin-bottom: 0;
+    }
+    .nav-link {
+        padding: 10px 14px;
+        font-size: 0.85rem;
+    }
+    .btn-logout {
+        margin-top: 0;
+        width: auto;
+        padding: 10px 14px;
+        white-space: nowrap;
+        flex-shrink: 0;
+        font-size: 0.85rem;
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 25px 20px;
+    }
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    .enrollments-stats {
+        flex-wrap: wrap;
+    }
+    .stat-card {
+        min-width: calc(50% - 10px);
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        padding: 10px 15px;
+    }
+    .nav-link span {
+        display: none;
+    }
+    .nav-link {
+        padding: 10px;
+    }
+    .main-content {
+        padding: 15px;
+    }
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .card {
+        padding: 20px 15px;
+    }
+    th, td {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+    .enrollments-stats {
+        flex-direction: column;
+    }
+    .stat-card {
+        min-width: unset;
+        width: 100%;
+    }
+    .modal-content {
+        padding: 25px 15px;
+        margin: 10px;
+    }
+}

@@ -87,3 +87,8 @@ nav {
     width: auto;
     display: block;
 }
+
+@media (max-width: 480px) {
+    header { padding: 10px 0; }
+    .brand img { max-height: 36px; }
+}

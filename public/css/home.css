@@ -358,31 +358,6 @@ footer {
     font-size: 0.85rem;
 }
 
-/* MODAL EXTRAS */
-.submit-btn {
-    width: 100%;
-    margin-top: 20px;
-    border-radius: 12px;
-}
-
-.guarantee {
-    text-align: center;
-    font-size: 0.85rem;
-    color: #888;
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    font-family: var(--font-title);
-    font-weight: 600;
-}
-
-.guarantee i {
-    color: var(--primary);
-    width: 16px;
-    height: 16px;
-}
 
 /* FLOATING WHATSAPP */
 .floating-wa {
@@ -427,13 +402,13 @@ footer {
 }
 
 /* RESPONSIVE */
-@media(max-width: 900px) {
+@media (max-width: 900px) {
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 40px;
     }
     .hero {
-        padding: 150px 0 100px;
+        padding: 130px 0 80px;
     }
     .hero > .container {
         grid-template-columns: 1fr;
@@ -443,14 +418,33 @@ footer {
         margin: 20px auto 30px;
         justify-content: center;
     }
+    .hero-image {
+        display: none;
+    }
+    .bootcamps, .why-us, .testimonials {
+        padding: 80px 0;
+    }
 }
 
-@media(max-width: 768px) {
+@media (max-width: 768px) {
     .section-header h2 {
         font-size: 2rem;
     }
+    .section-header {
+        margin-bottom: 40px;
+    }
+    .hero {
+        padding: 110px 0 70px;
+    }
     .hero h1 {
         font-size: 2.2rem;
+    }
+    .hero p {
+        font-size: 1rem;
+        margin-bottom: 30px;
+    }
+    nav .btn-white {
+        display: none;
     }
     .floating-wa {
         bottom: 20px;
@@ -459,21 +453,47 @@ footer {
         height: 55px;
     }
     .btn {
-        padding: 14px 24px;
+        padding: 14px 20px;
+    }
+    footer {
+        padding: 60px 0 30px;
+    }
+    .footer-grid {
+        gap: 30px;
+    }
+    .testi-card {
+        padding: 25px;
     }
 }
 
-@media(max-width: 480px) {
+@media (max-width: 480px) {
     .stats-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    .stat-item h3 {
+        font-size: 2.2rem;
     }
     .bootcamp-grid, .features-grid, .testi-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
-    .modal-content {
-        padding: 40px 20px;
+    .hero {
+        padding: 95px 0 60px;
+    }
+    .hero h1 {
+        font-size: 1.9rem;
+    }
+    .bootcamps, .why-us, .testimonials {
+        padding: 60px 0;
     }
     .separator::before, .separator::after {
-        width: 30px;
+        width: 25px;
+    }
+    .card {
+        padding: 30px 20px;
+    }
+    .feature-item {
+        padding: 25px 20px;
     }
 }

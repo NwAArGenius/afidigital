@@ -18,6 +18,9 @@
                 <a href="index.html" class="brand">
                     <img src="assets/logo.png" alt="AFI Digital Academy Logo">
                 </a>
+                <button class="btn btn-primary" id="headerEnrollBtn" style="padding: 10px 24px; min-height: 44px; font-size: 0.85rem;">
+                    S'inscrire
+                </button>
             </nav>
         </div>
     </header>
@@ -28,6 +31,47 @@
         </div>
     </main>
 
+    <!-- Modal d'inscription -->
+    <div class="modal-overlay" id="enrollModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal"><i data-lucide="x"></i></button>
+            <div class="modal-header">
+                <h3>S'INSCRIRE EN<br><span id="modalCourseName"></span></h3>
+            </div>
+
+            <form id="enrollForm">
+                <div class="form-group">
+                    <label for="fullName">Prénom et Nom *</label>
+                    <input type="text" id="fullName" class="form-control" required placeholder="Ex: Amadou Diallo">
+                </div>
+                <div class="form-group">
+                    <label for="whatsappNumber">Numéro WhatsApp *</label>
+                    <input type="tel" id="whatsappNumber" class="form-control" required placeholder="+221 77 000 00 00">
+                </div>
+                <div class="form-group">
+                    <label for="modalitySelect">Modalité *</label>
+                    <select id="modalitySelect" class="form-control" required>
+                        <option value="En ligne">En ligne</option>
+                        <option value="Présentiel">Présentiel</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary submit-btn">VALIDER MON INSCRIPTION</button>
+                <div class="guarantee">
+                    <i data-lucide="shield-check"></i> Traitement de votre demande en 24h
+                </div>
+            </form>
+
+            <div id="enrollSuccessView" style="display:none; text-align:center; padding: 20px 0;">
+                <div style="width:70px; height:70px; background: rgba(34,197,94,0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; margin: 0 auto 20px;">
+                    <i data-lucide="check-circle" style="width:40px; height:40px; color:#22c55e;"></i>
+                </div>
+                <h3 style="font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px;">DEMANDE ENREGISTRÉE !</h3>
+                <p style="color: #666; margin-bottom: 25px;">Votre demande d'inscription a bien été prise en compte.<br>Notre équipe vous contactera dans les <strong>24h</strong>.</p>
+                <button class="btn btn-primary" id="closeSuccessBtn">Fermer</button>
+            </div>
+        </div>
+    </div>
+
     <script src="js/api.js"></script>
     <script>
         lucide.createIcons();
@@ -36,11 +80,68 @@
         const formationId = urlParams.get('id');
         const container = document.getElementById('details-container');
 
-        function enrollWhatsApp(courseName) {
-            const message = `🎓 *Bonjour, je souhaite avoir plus d'informations sur la formation :*\n📚 ${courseName}\n\n_Pouvez-vous m'indiquer la procédure d'inscription ?_`;
-            const adminPhone = "221775023525";
-            window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`, '_blank');
-        }
+        const modal = document.getElementById('enrollModal');
+        const enrollForm = document.getElementById('enrollForm');
+        const enrollSuccessView = document.getElementById('enrollSuccessView');
+        const modalCourseName = document.getElementById('modalCourseName');
+        let currentFormationTitle = '';
+
+        const closeModal = () => {
+            modal.classList.remove('active');
+            enrollSuccessView.style.display = 'none';
+            enrollForm.style.display = '';
+        };
+
+        document.getElementById('closeModal').addEventListener('click', closeModal);
+        modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+        });
+        document.getElementById('closeSuccessBtn').addEventListener('click', closeModal);
+
+        window.openEnrollModal = (courseName) => {
+            currentFormationTitle = courseName;
+            modalCourseName.textContent = courseName.toUpperCase();
+            modal.classList.add('active');
+        };
+
+        document.getElementById('headerEnrollBtn').addEventListener('click', () => {
+            if (currentFormationTitle) openEnrollModal(currentFormationTitle);
+        });
+
+        enrollForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = enrollForm.querySelector('[type="submit"]');
+            const fullName = document.getElementById('fullName').value.trim();
+            const whatsappNumber = document.getElementById('whatsappNumber').value.trim();
+            const selectedModality = document.getElementById('modalitySelect').value;
+
+            if (!fullName || !whatsappNumber) {
+                alert("Veuillez remplir votre nom et numéro WhatsApp.");
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Envoi en cours...';
+
+            try {
+                await EnrollmentsManager.create({
+                    fullName,
+                    whatsappNumber,
+                    formation: currentFormationTitle,
+                    modality: selectedModality
+                });
+
+                enrollForm.reset();
+                enrollForm.style.display = 'none';
+                enrollSuccessView.style.display = '';
+                lucide.createIcons();
+            } catch (err) {
+                alert("Une erreur est survenue. Veuillez réessayer.");
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'VALIDER MON INSCRIPTION';
+            }
+        });
 
         (async () => {
             if (!formationId) {
@@ -90,8 +191,8 @@
                             </div>
                             <div class="action-area">
                                 <p style="margin-bottom: 20px; font-weight: 700;">Prêt(e) à donner un coup de boost à votre carrière ?</p>
-                                <button class="btn btn-primary" onclick="enrollWhatsApp('${formation.title.replace(/'/g, "\\'")}')">
-                                    <i data-lucide="message-circle"></i> INFO & INSCRIPTION SUR WHATSAPP
+                                <button class="btn btn-primary" onclick="openEnrollModal('${formation.title.replace(/'/g, "\\'")}')">
+                                    <i data-lucide="user-plus"></i> S'INSCRIRE À CETTE FORMATION
                                 </button>
                             </div>
                         </div>

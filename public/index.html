@@ -249,18 +249,27 @@
                 <div class="form-group">
                     <label for="modalitySelect">Modalité (En ligne ou Présentiel) *</label>
                     <select id="modalitySelect" class="form-control" required>
-                        <option value="En Ligne">En Ligne</option>
+                        <option value="En ligne">En ligne</option>
                         <option value="Présentiel">Présentiel</option>
                     </select>
                 </div>
 
                 <button type="submit" class="btn btn-primary submit-btn">
-                    VALIDER ET CONTACTER SUR WHATSAPP
+                    VALIDER MON INSCRIPTION
                 </button>
                 <div class="guarantee">
                     <i data-lucide="shield-check"></i> Traitement de votre demande en 24h
                 </div>
             </form>
+
+            <div id="enrollSuccessView" style="display:none; text-align:center; padding: 20px 0;">
+                <div style="width:70px; height:70px; background: rgba(34,197,94,0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; margin: 0 auto 20px;">
+                    <i data-lucide="check-circle" style="width:40px; height:40px; color:#22c55e;"></i>
+                </div>
+                <h3 style="font-family: var(--font-title); font-size: 1.4rem; margin-bottom: 15px;">DEMANDE ENREGISTRÉE !</h3>
+                <p style="color: #666; margin-bottom: 25px;">Votre demande d'inscription a bien été prise en compte.<br>Notre équipe vous contactera dans les <strong>24h</strong>.</p>
+                <button class="btn btn-primary" id="closeSuccessBtn">Fermer</button>
+            </div>
         </div>
     </div>
 
@@ -287,7 +296,13 @@
         const enrollForm = document.getElementById('enrollForm');
         const bootcampsGrid = document.getElementById('bootcampsGrid');
 
-        const closeModal = () => modal.classList.remove('active');
+        const closeModal = () => {
+            modal.classList.remove('active');
+            if (enrollSuccessView && enrollForm) {
+                enrollSuccessView.style.display = 'none';
+                enrollForm.style.display = '';
+            }
+        };
         closeModalBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
         document.addEventListener('keydown', e => {
@@ -326,7 +341,6 @@
                             <h3>${f.title.toUpperCase()}</h3>
                             <p>${f.shortDescription}</p>
                             <div class="card-meta">
-                                <div class="badge badge-accent" style="margin-bottom:0;">${f.level}</div>
                                 <div class="meta-item"><i data-lucide="clock" style="width:16px; color:var(--primary);"></i> ${f.duration}</div>
                             </div>
                             <div style="width:100%;">
@@ -343,6 +357,13 @@
             }
         })();
 
+        const enrollSuccessView = document.getElementById('enrollSuccessView');
+        document.getElementById('closeSuccessBtn').addEventListener('click', () => {
+            closeModal();
+            enrollSuccessView.style.display = 'none';
+            enrollForm.style.display = '';
+        });
+
         enrollForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitBtn = enrollForm.querySelector('[type="submit"]');
@@ -358,7 +379,7 @@
             }
 
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Envoi...';
+            submitBtn.textContent = 'Envoi en cours...';
 
             try {
                 await EnrollmentsManager.create({
@@ -367,18 +388,16 @@
                     formation: selectedCourse,
                     modality: selectedModality
                 });
+
+                enrollForm.reset();
+                enrollForm.style.display = 'none';
+                enrollSuccessView.style.display = '';
+                lucide.createIcons();
             } catch (err) {
-                console.warn('Inscription DB échouée:', err.message);
+                alert("Une erreur est survenue. Veuillez réessayer.");
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'VALIDER MON INSCRIPTION';
             }
-
-            const message = `🎓 *Nouvelle inscription AFI Digital Academy*\n\n👤 *Nom :* ${fullName}\n📱 *WhatsApp :* ${whatsappNumber}\n📚 *Formation souhaitée :* ${selectedCourse}\n📍 *Modalité :* ${selectedModality}\n\n_Merci de m'indiquer la suite de la procédure d'inscription._`;
-            const adminPhone = "221775023525";
-            window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`, '_blank');
-
-            closeModal();
-            enrollForm.reset();
-            submitBtn.disabled = false;
-            submitBtn.textContent = "S'INSCRIRE";
         });
     </script>
 </body>
