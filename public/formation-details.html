@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails Formation - AFI Digital Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/details.css">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="brand">
+                    <img src="assets/logo.png" alt="AFI Digital Academy Logo">
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container" id="details-container">
+            <!-- Injected by JS -->
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script>
+        lucide.createIcons();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const formationId = urlParams.get('id');
+        const container = document.getElementById('details-container');
+
+        function enrollWhatsApp(courseName) {
+            const message = `🎓 *Bonjour, je souhaite avoir plus d'informations sur la formation :*\n📚 ${courseName}\n\n_Pouvez-vous m'indiquer la procédure d'inscription ?_`;
+            const adminPhone = "221775023525";
+            window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        (async () => {
+            if (!formationId) {
+                container.innerHTML = `
+                    <div class="details-card not-found">
+                        <i data-lucide="alert-circle" style="width:60px; height:60px; color:var(--primary); margin-bottom:20px;"></i>
+                        <h2>Formation introuvable</h2>
+                        <p>Aucun identifiant de formation fourni.</p>
+                        <a href="index.html" class="btn btn-primary" style="margin-top:30px;">Retour à l'accueil</a>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            try {
+                const formation = await FormationsManager.getById(formationId);
+                if (formation) {
+                    container.innerHTML = `
+                        <div class="details-card">
+                            <a href="index.html#bootcamps" class="back-link">
+                                <i data-lucide="arrow-left" style="width:18px;"></i>
+                                Retour aux bootcamps
+                            </a>
+                            <div class="header-content">
+                                <div class="icon-huge">
+                                    <i data-lucide="${formation.icon}" style="width:50px; height:50px;"></i>
+                                </div>
+                                <div class="title-area">
+                                    <h1>${formation.title}</h1>
+                                    <div class="meta-tags">
+                                        <span class="badge">
+                                            <i data-lucide="bar-chart" style="width:16px;"></i>
+                                            ${formation.level}
+                                        </span>
+                                        <span class="badge" style="background-color: rgba(255, 179, 0, 0.15); border: none;">
+                                            <i data-lucide="clock" style="width:16px; color: var(--primary);"></i>
+                                            ${formation.duration}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-area">
+                                <h3>Aperçu du Programme</h3>
+                                <p style="font-weight: 500; font-size: 1.15rem; color: var(--black); margin-bottom: 10px;">${formation.shortDescription}</p>
+                                <p>${formation.longDescription}</p>
+                            </div>
+                            <div class="action-area">
+                                <p style="margin-bottom: 20px; font-weight: 700;">Prêt(e) à donner un coup de boost à votre carrière ?</p>
+                                <button class="btn btn-primary" onclick="enrollWhatsApp('${formation.title.replace(/'/g, "\\'")}')">
+                                    <i data-lucide="message-circle"></i> INFO & INSCRIPTION SUR WHATSAPP
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = `
+                        <div class="details-card not-found">
+                            <i data-lucide="alert-circle" style="width:60px; height:60px; color:var(--primary); margin-bottom:20px;"></i>
+                            <h2>Formation introuvable</h2>
+                            <p>La formation que vous recherchez n'existe pas ou a été supprimée.</p>
+                            <a href="index.html" class="btn btn-primary" style="margin-top:30px;">Retour à l'accueil</a>
+                        </div>
+                    `;
+                }
+            } catch (err) {
+                container.innerHTML = `
+                    <div class="details-card not-found">
+                        <i data-lucide="wifi-off" style="width:60px; height:60px; color:var(--primary); margin-bottom:20px;"></i>
+                        <h2>Erreur de chargement</h2>
+                        <p>Impossible de charger la formation. Vérifiez votre connexion.</p>
+                        <a href="index.html" class="btn btn-primary" style="margin-top:30px;">Retour à l'accueil</a>
+                    </div>
+                `;
+            }
+            lucide.createIcons();
+        })();
+    </script>
+</body>
+</html>

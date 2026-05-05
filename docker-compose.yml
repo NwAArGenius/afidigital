@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+
+  app:
+    build: .
+    container_name: afi-app
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - MONGODB_URI=mongodb://mongodb:27017/afidigital
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - afi-network
+
+  mongodb:
+    image: mongo:7
+    container_name: afi-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - afi_mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    networks:
+      - afi-network
+
+networks:
+  afi-network:
+    driver: bridge
+
+volumes:
+  afi_mongo_data:

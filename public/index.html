@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFI Digital Academy - Formations Digitales à Dakar</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/shared.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="brand">
+                    <img src="assets/logo.png" alt="AFI Digital Academy Logo">
+                </a>
+                <div style="display: flex; gap: 10px;">
+                    <a href="#bootcamps" class="btn btn-white" style="padding: 10px 24px; min-height: 44px; font-size: 0.85rem;">
+                        Nos Formations
+                    </a>
+                    <button class="btn btn-primary" onclick="openEnrollModal('')" style="padding: 10px 24px; min-height: 44px; font-size: 0.85rem;">
+                        S'inscrire
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container fade-in">
+            <div class="hero-content">
+                <span class="badge-text"><i data-lucide="zap" style="width:16px; height:16px; margin-right:5px; vertical-align:middle;"></i> Inscriptions ouvertes</span>
+                <h1>APPRENEZ LES COMPETENCES DU FUTUR</h1>
+
+                <div class="separator">
+                    <span>BUILD HERE YOUR SKILLS</span>
+                </div>
+
+                <p>Rejoignez nos bootcamps intensifs, formez-vous auprès d'experts du terrain et boostez votre carrière digitale à Dakar en quelques semaines.</p>
+
+                <a href="#bootcamps" class="btn btn-primary" style="font-size: 1rem; padding: 18px 40px;">
+                    Voir les Bootcamps
+                </a>
+            </div>
+            <div class="hero-image">
+                <img src="assets/hero-image.png" alt="Étudiant AFI Digital Academy VR">
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootcamps Section -->
+    <section id="bootcamps" class="bootcamps">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>NOS BOOTCAMPS INTENSIFS</h2>
+                <div class="separator">
+                    <span>EXPLORE COURSES</span>
+                </div>
+            </div>
+
+            <div class="bootcamp-grid" id="bootcampsGrid">
+                <!-- Data will be injected here via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section class="why-us">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>POURQUOI NOUS CHOISIR ?</h2>
+                <div class="separator">
+                    <span>AFI ADVANTAGES</span>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-item fade-in">
+                    <div class="feature-icon"><i data-lucide="briefcase" style="width:40px; height:40px;"></i></div>
+                    <h4>100% PRATIQUE</h4>
+                    <p>Développez un portfolio réel grâce à des projets concrets et en conditions réelles.</p>
+                </div>
+                <div class="feature-item fade-in" style="transition-delay: 0.1s;">
+                    <div class="feature-icon"><i data-lucide="users" style="width:40px; height:40px;"></i></div>
+                    <h4>INSTRUCTEURS EXPERTS</h4>
+                    <p>Apprenez des meilleurs professionnels actuellement en poste dans l'industrie.</p>
+                </div>
+                <div class="feature-item fade-in" style="transition-delay: 0.2s;">
+                    <div class="feature-icon"><i data-lucide="award" style="width:40px; height:40px;"></i></div>
+                    <h4>CERTIFICAT RECONNU</h4>
+                    <p>Valorisez vos compétences avec une certification très exigée par les employeurs.</p>
+                </div>
+                <div class="feature-item fade-in" style="transition-delay: 0.3s;">
+                    <div class="feature-icon"><i data-lucide="target" style="width:40px; height:40px;"></i></div>
+                    <h4>ACCOMPAGNEMENT</h4>
+                    <p>Un mentorat continu pour assurer votre réussite et votre insertion professionnelle.</p>
+                </div>
+            </div>
+
+            <div class="stats-grid fade-in">
+                <div class="stat-item">
+                    <h3>5+</h3>
+                    <p>Années d'expérience</p>
+                </div>
+                <div class="stat-item">
+                    <h3>500+</h3>
+                    <p>Étudiants formés</p>
+                </div>
+                <div class="stat-item">
+                    <h3>10+</h3>
+                    <p>Formateurs pros</p>
+                </div>
+                <div class="stat-item">
+                    <h3>4</h3>
+                    <p>Bootcamps</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2>TÉMOIGNAGES</h2>
+                <div class="separator">
+                    <span>STUDENT STORIES</span>
+                </div>
+            </div>
+
+            <div class="testi-grid">
+                <div class="testi-card fade-in">
+                    <i data-lucide="quote" class="quote-icon"></i>
+                    <p class="testi-text">"Grâce au bootcamp Marketing Digital, j'ai pu lancer mon agence à Dakar en seulement 2 mois. Les formateurs sont exceptionnels et très à l'écoute."</p>
+                    <div class="testi-user">
+                        <div class="user-avatar" style="background: var(--primary);">AK</div>
+                        <div>
+                            <h4>Aïssatou Kane</h4>
+                            <span>Alumni Marketing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testi-card fade-in" style="transition-delay: 0.1s;">
+                    <i data-lucide="quote" class="quote-icon"></i>
+                    <p class="testi-text">"La formation Dev Web m'a donné toutes les bases pour construire des applis complexes. Aujourd'hui je suis développeur frontend junior dans une startup."</p>
+                    <div class="testi-user">
+                        <div class="user-avatar" style="background: var(--black);">MD</div>
+                        <div>
+                            <h4>Moustapha Diop</h4>
+                            <span>Alumni Dev Web</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testi-card fade-in" style="transition-delay: 0.2s;">
+                    <i data-lucide="quote" class="quote-icon"></i>
+                    <p class="testi-text">"J'ai adoré l'approche très pratique du module IA. Ça m'a permis d'automatiser 50% de mes tâches au travail et de me démarquer auprès de mes managers."</p>
+                    <div class="testi-user">
+                        <div class="user-avatar" style="background: var(--accent); color: var(--black);">FS</div>
+                        <div>
+                            <h4>Fatou Ndiaye Sy</h4>
+                            <span>Alumni I.A.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">
+                        <img src="assets/logo.png" alt="AFI Digital Academy Logo">
+                    </div>
+                    <p style="margin-bottom: 20px;">L'académie de formation digitale de référence au Sénégal. Formez-vous aux métiers de demain et donnez un coup de boost à votre carrière.</p>
+                    <div class="social-links">
+                        <a href="#"><i data-lucide="facebook"></i></a>
+                        <a href="#"><i data-lucide="instagram"></i></a>
+                        <a href="#"><i data-lucide="linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="color: var(--white); margin-bottom: 25px; font-family: var(--font-title); font-size: 1.2rem;">CONTACT & INFOS</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i data-lucide="phone"></i>
+                            <span>+221 77 185 99 96</span>
+                        </li>
+                        <li>
+                            <i data-lucide="mail"></i>
+                            <span>info@afidigitalacademy.com</span>
+                        </li>
+                        <li>
+                            <i data-lucide="map-pin"></i>
+                            <span>711A Résidence de la Paix<br>Dakar, Sénégal</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 AFI Digital Academy. Intégration de l'identité visuelle réalisée avec succès.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/221771859996" target="_blank" class="floating-wa">
+        <i data-lucide="message-circle"></i>
+    </a>
+
+    <!-- Modal d'inscription -->
+    <div class="modal-overlay" id="enrollModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal"><i data-lucide="x"></i></button>
+            <div class="modal-header">
+                <h3>S'INSCRIRE EN<br><span id="modalCourseName"></span></h3>
+            </div>
+
+            <form id="enrollForm">
+                <div class="form-group">
+                    <label for="fullName">Prénom et Nom *</label>
+                    <input type="text" id="fullName" class="form-control" required placeholder="Ex: Amadou Diallo">
+                </div>
+
+                <div class="form-group">
+                    <label for="whatsappNumber">Numéro WhatsApp *</label>
+                    <input type="tel" id="whatsappNumber" class="form-control" required placeholder="+221 77 000 00 00">
+                </div>
+
+                <div class="form-group">
+                    <label for="courseSelect">Formation choisie *</label>
+                    <select id="courseSelect" class="form-control" required>
+                        <!-- Options generated by JS -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="modalitySelect">Modalité (En ligne ou Présentiel) *</label>
+                    <select id="modalitySelect" class="form-control" required>
+                        <option value="En Ligne">En Ligne</option>
+                        <option value="Présentiel">Présentiel</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary submit-btn">
+                    VALIDER ET CONTACTER SUR WHATSAPP
+                </button>
+                <div class="guarantee">
+                    <i data-lucide="shield-check"></i> Traitement de votre demande en 24h
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        lucide.createIcons();
+
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        const modal = document.getElementById('enrollModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const modalCourseName = document.getElementById('modalCourseName');
+        const courseSelect = document.getElementById('courseSelect');
+        const enrollForm = document.getElementById('enrollForm');
+        const bootcampsGrid = document.getElementById('bootcampsGrid');
+
+        const closeModal = () => modal.classList.remove('active');
+        closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+        });
+
+        window.openEnrollModal = (courseName) => {
+            modalCourseName.textContent = courseName ? courseName.toUpperCase() : "AU BOOTCAMP";
+            if (courseName && courseSelect.querySelector(`option[value="${courseName}"]`)) {
+                courseSelect.value = courseName;
+            } else if (courseSelect.options.length > 0) {
+                courseSelect.selectedIndex = 0;
+            }
+            modal.classList.add('active');
+        };
+
+        (async () => {
+            try {
+                const formations = await FormationsManager.getAll();
+                if (formations.length > 0) {
+                    bootcampsGrid.innerHTML = '';
+                    courseSelect.innerHTML = '';
+                    formations.forEach((f, index) => {
+                        const option = document.createElement('option');
+                        option.value = f.title;
+                        option.textContent = f.title;
+                        courseSelect.appendChild(option);
+
+                        const card = document.createElement('div');
+                        card.className = 'card fade-in';
+                        card.style.transitionDelay = `${index * 0.1}s`;
+                        card.innerHTML = `
+                            <div class="card-icon-wrapper">
+                                <i data-lucide="${f.icon}" style="width:28px; height:28px;"></i>
+                            </div>
+                            <h3>${f.title.toUpperCase()}</h3>
+                            <p>${f.shortDescription}</p>
+                            <div class="card-meta">
+                                <div class="badge badge-accent" style="margin-bottom:0;">${f.level}</div>
+                                <div class="meta-item"><i data-lucide="clock" style="width:16px; color:var(--primary);"></i> ${f.duration}</div>
+                            </div>
+                            <div style="width:100%;">
+                                <a href="formation-details.html?id=${f._id}" class="btn btn-primary" style="width:100%; display:inline-block; text-align:center;">Voir les détails</a>
+                            </div>
+                        `;
+                        bootcampsGrid.appendChild(card);
+                        observer.observe(card);
+                    });
+                    lucide.createIcons();
+                }
+            } catch (err) {
+                bootcampsGrid.innerHTML = '<p style="text-align:center; color:#888;">Impossible de charger les formations. Veuillez réessayer.</p>';
+            }
+        })();
+
+        enrollForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = enrollForm.querySelector('[type="submit"]');
+
+            const fullName = document.getElementById('fullName').value.trim();
+            const whatsappNumber = document.getElementById('whatsappNumber').value.trim();
+            const selectedCourse = courseSelect.value;
+            const selectedModality = document.getElementById('modalitySelect').value;
+
+            if (!fullName || !whatsappNumber) {
+                alert("Veuillez remplir votre nom et numéro WhatsApp.");
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Envoi...';
+
+            try {
+                await EnrollmentsManager.create({
+                    fullName,
+                    whatsappNumber,
+                    formation: selectedCourse,
+                    modality: selectedModality
+                });
+            } catch (err) {
+                console.warn('Inscription DB échouée:', err.message);
+            }
+
+            const message = `🎓 *Nouvelle inscription AFI Digital Academy*\n\n👤 *Nom :* ${fullName}\n📱 *WhatsApp :* ${whatsappNumber}\n📚 *Formation souhaitée :* ${selectedCourse}\n📍 *Modalité :* ${selectedModality}\n\n_Merci de m'indiquer la suite de la procédure d'inscription._`;
+            const adminPhone = "221775023525";
+            window.open(`https://wa.me/${adminPhone}?text=${encodeURIComponent(message)}`, '_blank');
+
+            closeModal();
+            enrollForm.reset();
+            submitBtn.disabled = false;
+            submitBtn.textContent = "S'INSCRIRE";
+        });
+    </script>
+</body>
+</html>

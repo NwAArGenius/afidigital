@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - AFI Digital Academy</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <a href="index.html" class="brand">
+            <img src="assets/logo.png" alt="AFI Logo" onerror="this.src=''; this.alt='AFI ADMIN'">
+        </a>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="#" class="nav-link active" id="nav-formations" onclick="showSection('formations')">
+                    <i data-lucide="book-open"></i>
+                    Gestion Formations
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" id="nav-inscriptions" onclick="showSection('inscriptions')">
+                    <i data-lucide="users"></i>
+                    Inscriptions
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="index.html" class="nav-link">
+                    <i data-lucide="external-link"></i>
+                    Voir le site
+                </a>
+            </li>
+        </ul>
+        <button class="btn-logout" onclick="window.location.href='index.html'">
+            <i data-lucide="log-out"></i>
+            Quitter
+        </button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Section Formations -->
+        <div id="section-formations" class="section-content active">
+            <div class="header">
+                <div>
+                    <h1>Formations</h1>
+                    <p>Gérez les bootcamps affichés sur le site web.</p>
+                </div>
+                <button class="btn btn-primary" id="btn-add-formation">
+                    <i data-lucide="plus"></i>
+                    Nouvelle Formation
+                </button>
+            </div>
+            <div class="card">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Formation</th>
+                                <th>Niveau</th>
+                                <th>Durée</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="formations-table-body">
+                            <!-- Filled by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Inscriptions -->
+        <div id="section-inscriptions" class="section-content">
+            <div class="header">
+                <div>
+                    <h1>Inscriptions</h1>
+                    <p>Suivez et gérez les demandes d'inscription des étudiants.</p>
+                </div>
+                <button class="btn btn-primary" onclick="loadInscriptions()">
+                    <i data-lucide="refresh-cw"></i>
+                    Actualiser
+                </button>
+            </div>
+            <div class="enrollments-stats" id="enrollments-stats">
+                <div class="stat-card"><div class="stat-number" id="stat-total">0</div><div class="stat-label">Total</div></div>
+                <div class="stat-card"><div class="stat-number" id="stat-pending">0</div><div class="stat-label">En attente</div></div>
+                <div class="stat-card"><div class="stat-number" id="stat-enrolled">0</div><div class="stat-label">Inscrits</div></div>
+                <div class="stat-card"><div class="stat-number" id="stat-contacted">0</div><div class="stat-label">Contactés</div></div>
+            </div>
+            <div class="card">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>WhatsApp</th>
+                                <th>Formation</th>
+                                <th>Modalité</th>
+                                <th>Statut</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inscriptions-table-body">
+                            <!-- Filled by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modal Form -->
+    <div class="modal-overlay" id="formationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Ajouter une formation</h3>
+                <button class="modal-close" id="btnCloseModal"><i data-lucide="x"></i></button>
+            </div>
+            <form id="formationForm">
+                <input type="hidden" id="formationId">
+                <div class="form-group">
+                    <label for="fTitle">Titre de la formation *</label>
+                    <input type="text" id="fTitle" class="form-control" required placeholder="Ex: Développement Web">
+                </div>
+                <div class="form-group">
+                    <label for="fShort">Description Courte *</label>
+                    <input type="text" id="fShort" class="form-control" required placeholder="1 phrase accrocheuse" maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label for="fLong">Description Détaillée *</label>
+                    <textarea id="fLong" class="form-control" required placeholder="Description complète du programme..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fLevel">Niveau *</label>
+                        <select id="fLevel" class="form-control" required>
+                            <option value="Débutant">Débutant</option>
+                            <option value="Intermédiaire">Intermédiaire</option>
+                            <option value="Avancé">Avancé</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fDuration">Durée *</label>
+                        <input type="text" id="fDuration" class="form-control" required placeholder="Ex: 8 Semaines">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="fIcon">Icône (Nom Lucide) * <a href="https://lucide.dev/icons" target="_blank" class="lucide-link">Trouver des icônes</a></label>
+                    <input type="text" id="fIcon" class="form-control" required placeholder="Ex: code, target, pen-tool, cpu">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Enregistrer</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        lucide.createIcons();
+
+        window.showSection = (section) => {
+            document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            document.getElementById(`section-${section}`).classList.add('active');
+            document.getElementById(`nav-${section}`).classList.add('active');
+            if (section === 'inscriptions') loadInscriptions();
+        };
+
+        const tableBody = document.getElementById('formations-table-body');
+        const modal = document.getElementById('formationModal');
+        const btnAdd = document.getElementById('btn-add-formation');
+        const btnClose = document.getElementById('btnCloseModal');
+        const form = document.getElementById('formationForm');
+        const modalTitle = document.getElementById('modal-title');
+
+        const fId = document.getElementById('formationId');
+        const fTitle = document.getElementById('fTitle');
+        const fShort = document.getElementById('fShort');
+        const fLong = document.getElementById('fLong');
+        const fLevel = document.getElementById('fLevel');
+        const fDuration = document.getElementById('fDuration');
+        const fIcon = document.getElementById('fIcon');
+
+        async function renderTable() {
+            try {
+                const formations = await FormationsManager.getAll();
+                tableBody.innerHTML = '';
+                formations.forEach(f => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>
+                            <div class="formation-info">
+                                <div class="formation-icon-preview">
+                                    <i data-lucide="${f.icon}"></i>
+                                </div>
+                                <div>
+                                    <div class="formation-title">${f.title}</div>
+                                    <div style="font-size: 0.85rem; color: #666;">${f.shortDescription}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="badge">${f.level}</span></td>
+                        <td><strong>${f.duration}</strong></td>
+                        <td>
+                            <div class="actions">
+                                <button class="btn-icon btn-edit" onclick="editFormation('${f._id}')" title="Modifier">
+                                    <i data-lucide="edit-2" style="width:18px;"></i>
+                                </button>
+                                <button class="btn-icon btn-delete" onclick="deleteFormation('${f._id}')" title="Supprimer">
+                                    <i data-lucide="trash-2" style="width:18px;"></i>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+                lucide.createIcons();
+            } catch (err) {
+                tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#888;">Erreur de chargement</td></tr>';
+            }
+        }
+
+        btnAdd.addEventListener('click', () => {
+            form.reset();
+            fId.value = '';
+            modalTitle.textContent = 'Ajouter une formation';
+            modal.classList.add('active');
+        });
+
+        btnClose.addEventListener('click', () => modal.classList.remove('active'));
+
+        window.editFormation = async (id) => {
+            try {
+                const f = await FormationsManager.getById(id);
+                if (f) {
+                    fId.value = f._id;
+                    fTitle.value = f.title;
+                    fShort.value = f.shortDescription;
+                    fLong.value = f.longDescription;
+                    fLevel.value = f.level;
+                    fDuration.value = f.duration;
+                    fIcon.value = f.icon;
+                    modalTitle.textContent = 'Modifier la formation';
+                    modal.classList.add('active');
+                }
+            } catch (err) {
+                alert('Erreur lors du chargement de la formation.');
+            }
+        };
+
+        window.deleteFormation = async (id) => {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cette formation ?')) {
+                try {
+                    await FormationsManager.delete(id);
+                    renderTable();
+                } catch (err) {
+                    alert('Erreur lors de la suppression.');
+                }
+            }
+        };
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = form.querySelector('[type="submit"]');
+            submitBtn.disabled = true;
+            const data = {
+                title: fTitle.value,
+                shortDescription: fShort.value,
+                longDescription: fLong.value,
+                level: fLevel.value,
+                duration: fDuration.value,
+                icon: fIcon.value || 'book'
+            };
+            try {
+                if (fId.value) {
+                    await FormationsManager.update(fId.value, data);
+                } else {
+                    await FormationsManager.create(data);
+                }
+                modal.classList.remove('active');
+                renderTable();
+            } catch (err) {
+                alert('Erreur: ' + err.message);
+            } finally {
+                submitBtn.disabled = false;
+            }
+        });
+
+        window.loadInscriptions = async () => {
+            const tbody = document.getElementById('inscriptions-table-body');
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#888; padding:30px;">Chargement...</td></tr>';
+            try {
+                const enrollments = await EnrollmentsManager.getAll();
+                tbody.innerHTML = '';
+
+                document.getElementById('stat-total').textContent = enrollments.length;
+                document.getElementById('stat-pending').textContent = enrollments.filter(e => e.status === 'pending').length;
+                document.getElementById('stat-enrolled').textContent = enrollments.filter(e => e.status === 'enrolled').length;
+                document.getElementById('stat-contacted').textContent = enrollments.filter(e => e.status === 'contacted').length;
+
+                if (enrollments.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#888; padding:30px;">Aucune inscription pour le moment.</td></tr>';
+                    return;
+                }
+
+                enrollments.forEach(e => {
+                    const date = new Date(e.createdAt).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${e.fullName}</strong></td>
+                        <td><a href="https://wa.me/${e.whatsappNumber.replace(/\D/g,'')}" target="_blank" style="color:var(--primary);">${e.whatsappNumber}</a></td>
+                        <td>${e.formation}</td>
+                        <td>${e.modality}</td>
+                        <td>
+                            <select class="status-select" onchange="updateStatus('${e._id}', this.value)">
+                                <option value="pending"   ${e.status==='pending'   ? 'selected' : ''}>En attente</option>
+                                <option value="contacted" ${e.status==='contacted' ? 'selected' : ''}>Contacté</option>
+                                <option value="enrolled"  ${e.status==='enrolled'  ? 'selected' : ''}>Inscrit</option>
+                                <option value="cancelled" ${e.status==='cancelled' ? 'selected' : ''}>Annulé</option>
+                            </select>
+                        </td>
+                        <td style="color:#888; font-size:0.9rem;">${date}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (err) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#888;">Erreur de chargement</td></tr>';
+            }
+        };
+
+        window.updateStatus = async (id, status) => {
+            try {
+                await EnrollmentsManager.updateStatus(id, status);
+            } catch (err) {
+                alert('Erreur mise à jour statut.');
+            }
+        };
+
+        renderTable();
+    </script>
+</body>
+</html>
